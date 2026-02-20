@@ -1,0 +1,57 @@
+#region Prolog
+#===============================================================================
+# Process: Export_Cube_Descriptions
+# Purpose: Extract data from zai_cube_description cube and export to file
+# Target: PAaaS - cube_descriptions folder
+#===============================================================================
+# Define file path for PAaaS
+sFilePath = '..\..\data\cube_descriptions\cube_descriptions.csv';
+
+# Create/Open the output file
+ASCIIOutput(sFilePath, '');
+
+# Write header row
+sHeader = 'Language,Version,Cube Name,Description Type,Description Value';
+ASCIIOutput(sFilePath, sHeader);
+
+# Define cube and dimensions
+sCube = 'zai_cube_description';
+sDim1 = 'zai_language';
+sDim2 = 'zai_version';
+sDim3 = 'zai_cube_list';
+sDim4 = 'zai_cube_description';
+
+# Initialize counters
+nRecordCount = 0;
+#endregion
+#region Data
+# Data Source Tab Configuration:
+# Set Data Source Type to: "Cube"
+# Cube Name: zai_cube_description
+# View: Create a view with all dimensions
+
+# Variables are automatically assigned from the cube view:
+# V1 = zai_language element
+# V2 = zai_version element  
+# V3 = zai_cube_list element
+# V4 = zai_cube_description element
+# V5 = Numeric value (if any)
+# V6 = String value (if any)
+
+# Get the appropriate value (numeric or string)
+sValue = '';
+If(V5 <> 0);
+    sValue = NumberToString(V5);
+Else;
+    sValue = V6;
+EndIf;
+
+# Build output record with proper CSV formatting (handle commas in descriptions)
+sOutput = V1 | ',' | V2 | ',' | V3 | ',' | V4 | ',"' | sValue | '"';
+
+# Write to file
+ASCIIOutput(sFilePath, sOutput);
+
+# Increment counter
+nRecordCount = nRecordCount + 1;
+#endregion

@@ -1,0 +1,24 @@
+{
+	"@type":"Hierarchy",
+	"Name":"zai_version",
+	"Elements":
+	[
+		{
+			"Name":"v1",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"v2",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"v3",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"Final",
+			"Type":"Numeric"
+		}
+	],
+	"Subsets@Code.links":[]
+}

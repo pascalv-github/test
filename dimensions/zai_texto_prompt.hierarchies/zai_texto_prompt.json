@@ -1,0 +1,12 @@
+{
+	"@type":"Hierarchy",
+	"Name":"zai_texto_prompt",
+	"Elements":
+	[
+		{
+			"Name":"text",
+			"Type":"String"
+		}
+	],
+	"Subsets@Code.links":[]
+}

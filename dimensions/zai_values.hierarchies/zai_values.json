@@ -1,0 +1,16 @@
+{
+	"@type":"Hierarchy",
+	"Name":"zai_values",
+	"Elements":
+	[
+		{
+			"Name":"txt",
+			"Type":"String"
+		},
+		{
+			"Name":"num",
+			"Type":"Numeric"
+		}
+	],
+	"Subsets@Code.links":[]
+}

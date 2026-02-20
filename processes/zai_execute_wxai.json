@@ -1,0 +1,32 @@
+{
+	"@type":"Process",
+	"Name":"zai_execute_wxai",
+	"HasSecurityAccess":false,
+	"Code@Code.link":"zai_execute_wxai.ti",
+	"DataSource":
+	{
+		"Type":"None"
+	},
+	"Parameters":
+	[
+		{
+			"Name":"pMaxTokens",
+			"Prompt":"",
+			"Value":1000,
+			"Type":"Numeric"
+		},
+		{
+			"Name":"pModelID",
+			"Prompt":"",
+			"Value":"meta-llama/llama-4-maverick-17b-128e-instruct-fp8",
+			"Type":"String"
+		},
+		{
+			"Name":"pProjectID",
+			"Prompt":"",
+			"Value":"f803ca70-425b-426f-8cca-03cc6d80e687",
+			"Type":"String"
+		}
+	],
+	"Variables":[]
+}

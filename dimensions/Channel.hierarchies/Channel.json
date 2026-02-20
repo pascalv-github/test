@@ -1,0 +1,33 @@
+{
+	"@type":"Hierarchy",
+	"Name":"Channel",
+	"Elements":
+	[
+		{
+			"Name":"Total Channel",
+			"Type":"Consolidated"
+		},
+		{
+			"Name":"Retail",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"Internet",
+			"Type":"Numeric"
+		}
+	],
+	"Edges":
+	[
+		{
+			"ParentName":"Total Channel",
+			"ComponentName":"Retail",
+			"Weight":1
+		},
+		{
+			"ParentName":"Total Channel",
+			"ComponentName":"Internet",
+			"Weight":1
+		}
+	],
+	"Subsets@Code.links":[]
+}

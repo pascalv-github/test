@@ -1,0 +1,23 @@
+{
+	"@type":"Cube",
+	"Name":"zai_prompt",
+	"Dimensions":
+	[
+		{
+			"@id":"Dimensions('zai_language')"
+		},
+		{
+			"@id":"Dimensions('zai_version')"
+		},
+		{
+			"@id":"Dimensions('zai_prompt')"
+		},
+		{
+			"@id":"Dimensions('zai_texto_prompt')"
+		}
+	],
+	"Views@Code.links":
+	[
+		"zai_prompt.views/Default.json"
+	]
+}

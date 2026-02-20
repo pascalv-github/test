@@ -1,0 +1,16 @@
+{
+	"@type":"Hierarchy",
+	"Name":"zai_language",
+	"Elements":
+	[
+		{
+			"Name":"es",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"en",
+			"Type":"Numeric"
+		}
+	],
+	"Subsets@Code.links":[]
+}

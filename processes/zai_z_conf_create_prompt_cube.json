@@ -1,0 +1,12 @@
+{
+	"@type":"Process",
+	"Name":"zai_z_conf_create_prompt_cube",
+	"HasSecurityAccess":false,
+	"Code@Code.link":"zai_z_conf_create_prompt_cube.ti",
+	"DataSource":
+	{
+		"Type":"None"
+	},
+	"Parameters":[],
+	"Variables":[]
+}

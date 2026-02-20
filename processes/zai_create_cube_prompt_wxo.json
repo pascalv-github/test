@@ -1,0 +1,38 @@
+{
+	"@type":"Process",
+	"Name":"zai_create_cube_prompt_wxo",
+	"HasSecurityAccess":false,
+	"Code@Code.link":"zai_create_cube_prompt_wxo.ti",
+	"DataSource":
+	{
+		"Type":"None"
+	},
+	"Parameters":
+	[
+		{
+			"Name":"pCubeName",
+			"Prompt":"",
+			"Value":"Datos profesionales T",
+			"Type":"String"
+		},
+		{
+			"Name":"pLanguage",
+			"Prompt":"",
+			"Value":"es",
+			"Type":"String"
+		},
+		{
+			"Name":"pVersion",
+			"Prompt":"",
+			"Value":"Final",
+			"Type":"String"
+		},
+		{
+			"Name":"pQuery",
+			"Prompt":"",
+			"Value":"cuantos empleados son Abogados del estado?",
+			"Type":"String"
+		}
+	],
+	"Variables":[]
+}

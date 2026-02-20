@@ -1,0 +1,28 @@
+{
+	"@type":"Hierarchy",
+	"Name":"Products",
+	"Elements":
+	[
+		{
+			"Name":"Total Product",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"711",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"758",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"757",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"756",
+			"Type":"Numeric"
+		}
+	],
+	"Subsets@Code.links":[]
+}

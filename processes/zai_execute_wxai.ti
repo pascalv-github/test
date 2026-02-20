@@ -1,0 +1,106 @@
+#region Prolog
+
+#================================================================
+# TI Process: Call watsonx.ai API
+# Purpose: Execute HTTP call to watsonx.ai to send a prompt and get response
+# Parameters:
+#   pPrompt (String) - The text prompt to send to watsonx.ai
+#   pAPIKey (String) - Your watsonx.ai API key
+#   pProjectID (String) - Your watsonx.ai project ID
+#   pModelID (String) - Model ID (default: ibm/granite-13b-chat-v2)
+#   pMaxTokens (Numeric) - Maximum tokens for response (default: 200)
+#================================================================
+
+#### get token
+vAPIKey = CellGetS( 'zai_config', 'ibmcloud apikey', 'Final', 'txt' );
+vLogFile='Token.json';
+# Request Access Token
+vGrant_type = 'urn:ibm:params:oauth:grant-type:apikey';
+vTokenUrl = 'https://iam.cloud.ibm.com/identity/token?apikey=' | vAPIKey | '&grant_type=' | vGrant_type;
+ExecuteHttpRequest('POST', vTokenUrl);
+responseCode = HttpResponseGetStatusCode();
+vResponseBody = HttpResponseGetBody();
+vToken = JsonGet(vResponseBody, 'access_token' );
+vToken=SUBST( vToken, 2, LONG( vToken )-2);
+CellPutS( vToken, 'zai_config', 'ibmcloud token', 'Final', 'txt' );
+
+#### end get token
+
+######______________
+# Define watsonx.ai API endpoint and credentials
+sWatsonxURL = 'https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29';
+sProjectID = pProjectID;
+
+# Get the prompt from parameter (you can also read from a cube or dimension)
+#sPrompt = CellGetS( 'zai_prompt', 'es', 'Final', 'final promt', 'text' );
+sPrompt='## Role Eres un experto y crea un mdx';
+
+# Build the request body
+sModelID = pModelID;
+sRequestBody = '{
+  "input": "' | sPrompt | '",
+  "parameters": {
+    "decoding_method": "greedy",
+    "max_new_tokens": 900,
+    "min_new_tokens": 0,
+    "stop_sequences": [],
+    "repetition_penalty": 1
+  },
+  "model_id": "' | sModelID | '",
+  "project_id": "' | sProjectID | '"
+}';
+
+sYOUR_ACCESS_TOKEN=vToken;
+
+# Prepare headers
+sAuthHeader = 'Bearer ' | sYOUR_ACCESS_TOKEN;
+#old sAuthHeader = 'Bearer ' | sAPIKey;
+#-H "Authorization: Bearer ${YOUR_ACCESS_TOKEN}"
+sHeaders = '{
+  "Content-Type": "application/json",
+  "Accept": "application/json",
+  "Authorization": "' | sAuthHeader | '"
+}';
+
+# Initialize response variable
+sResponse = '';
+
+ExecuteHttpRequest('POST', sWatsonxURL,
+    '-h Content-Type:application/json',
+    '-h Accept:application/json',
+    '-h Authorization:Bearer ' | vToken,
+    '-d {"input": "' | sPrompt | '",
+        "parameters": {
+		"decoding_method": "greedy",
+		"max_new_tokens": 900,
+		"min_new_tokens": 0,
+		"stop_sequences": [],
+		"repetition_penalty": 1
+	},
+	"model_id": "openai/gpt-oss-120b",
+	"project_id": "f803ca70-425b-426f-8cca-03cc6d80e687"}'
+);
+
+jsonResponseBody = HttpResponseGetBody();
+status = HttpResponseGetStatusCode();
+
+ASCIIOutput( 'MDXgenerated.txt', jsonResponseBody );
+
+CellPutS(  '-d {"input": "## Role Eres un experto y crea un mdx",
+    "parameters": {
+		"decoding_method": "greedy",
+		"max_new_tokens": 900,
+		"min_new_tokens": 0,
+		"stop_sequences": [],
+		"repetition_penalty": 1
+	},
+	"model_id": "openai/gpt-oss-120b",
+	"project_id": "f803ca70-425b-426f-8cca-03cc6d80e687"}'  , 'zai_config', 'test', 'Final', 'txt' );
+
+CellPutN( status, 'zai_config', 'test', 'Final', 'num' );
+CellPutS( jsonResponseBody, 'zai_config', 'MDX Output', 'Final', 'txt' );
+
+
+
+
+#endregion

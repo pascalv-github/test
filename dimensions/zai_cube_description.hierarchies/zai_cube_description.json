@@ -1,0 +1,12 @@
+{
+	"@type":"Hierarchy",
+	"Name":"zai_cube_description",
+	"Elements":
+	[
+		{
+			"Name":"Cube description",
+			"Type":"String"
+		}
+	],
+	"Subsets@Code.links":[]
+}

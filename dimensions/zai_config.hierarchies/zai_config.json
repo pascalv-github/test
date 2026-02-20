@@ -1,0 +1,24 @@
+{
+	"@type":"Hierarchy",
+	"Name":"zai_config",
+	"Elements":
+	[
+		{
+			"Name":"ibmcloud apikey",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"ibmcloud token",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"test",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"MDX Output",
+			"Type":"Numeric"
+		}
+	],
+	"Subsets@Code.links":[]
+}

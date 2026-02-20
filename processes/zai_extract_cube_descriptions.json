@@ -1,0 +1,15 @@
+{
+	"@type":"Process",
+	"Name":"zai_extract_cube_descriptions",
+	"HasSecurityAccess":false,
+	"Code@Code.link":"zai_extract_cube_descriptions.ti",
+	"DataSource":
+	{
+		"Type":"TM1CubeView",
+		"dataSourceNameForServer":"zai_cube_description",
+		"dataSourceNameForClient":"zai_cube_description",
+		"view":""
+	},
+	"Parameters":[],
+	"Variables":[]
+}

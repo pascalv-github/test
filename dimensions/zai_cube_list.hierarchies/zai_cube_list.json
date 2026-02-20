@@ -1,0 +1,28 @@
+{
+	"@type":"Hierarchy",
+	"Name":"zai_cube_list",
+	"Elements":
+	[
+		{
+			"Name":"cube 1",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"cube 2",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"cube 3",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"cube 4",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"cube 5",
+			"Type":"Numeric"
+		}
+	],
+	"Subsets@Code.links":[]
+}

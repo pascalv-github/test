@@ -1,0 +1,12 @@
+{
+	"@type":"Dimension",
+	"Name":"zai_texto_prompt",
+	"Hierarchies@Code.links":
+	[
+		"zai_texto_prompt.hierarchies/zai_texto_prompt.json"
+	],
+	"DefaultHierarchy":
+	{
+		"@id":"Dimensions('zai_texto_prompt')/Hierarchies('zai_texto_prompt')"
+	}
+}

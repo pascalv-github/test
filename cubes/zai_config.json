@@ -1,0 +1,17 @@
+{
+	"@type":"Cube",
+	"Name":"zai_config",
+	"Dimensions":
+	[
+		{
+			"@id":"Dimensions('zai_config')"
+		},
+		{
+			"@id":"Dimensions('zai_version')"
+		},
+		{
+			"@id":"Dimensions('zai_values')"
+		}
+	],
+	"Views@Code.links":[]
+}

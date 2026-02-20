@@ -1,0 +1,32 @@
+{
+	"@type":"Hierarchy",
+	"Name":"zai_prompt",
+	"Elements":
+	[
+		{
+			"Name":"prompt ini",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"question",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"prompt question",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"non specified dim",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"supporting material",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"final promt",
+			"Type":"Numeric"
+		}
+	],
+	"Subsets@Code.links":[]
+}

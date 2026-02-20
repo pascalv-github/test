@@ -1,0 +1,187 @@
+#region Prolog
+vLanguage=pLanguage;
+vVers=pVersion;
+sFile = 'prompt/' | pCubeName | '.txt';
+ASCIIDelete( sFile );
+ASCIIOutputOpen(sFile,1);
+
+
+
+nDimCount = CubeDimensionCountGet(pCubeName);
+intro_prompt=CellGetS( 'zai_prompt',vLanguage,vVers, 'prompt ini', 'text' );
+prompt=intro_prompt | ' "' | pCubeName | '" with ' | NumberToString(nDimCount) | ' dimensions: “';
+# prompt='You’re grok, an expert in IBM PLanning Analytics and MDX, the query language for multidimensional data base. 
+# I have a cube named "' | pCubeName | ' with ' | NumberToString(nDimCount) | ' dimensions: “';
+# ##AsciiOutput(sFile, prompt);
+
+cptD=1;
+while (cptD<=nDimCount); 
+    sDim = TabDim(pCubeName, cptD);
+    prompt = prompt | ', ' | sDim; 
+    cptD=cptD+1;
+end;
+
+prompt = prompt | '.
+';
+
+AsciiOutput(sFile, prompt);
+vFinalPromp=prompt;
+
+i = 1;
+While (i <= nDimCount);
+
+    # Get dimension name at position i
+    sDim = TabDim(pCubeName, i);
+
+    # Skip control dimensions like }ElementAttributes_xxx (optional)
+    If (SUBST(sDim, 1, 1) @= '}');
+        # Skip } dimensions if you don't want them
+        i = i + 1;
+    EndIf;
+    i = i + 1;
+################ Add dim to prompt ###############
+pDimension=sDim;
+    
+DatasourceNameForServer = pDimension;
+DatasourceType = 'Subset';
+DatasourceDimensionSubset = 'All';   
+# # or a specific subset
+
+# Optional: write header
+AsciiOutput(sFile,'The dimension ' | pDimension | ' has the folowwing structure:' );
+vFinalPromp=vFinalPromp | 'The dimension ' | pDimension | ' has the folowwing structure:';
+AsciiOutput(sFile, 'Type', 'Parent', 'Child', 'Weight');
+vFinalPromp=vFinalPromp |  'Type, Parent, Child, Weight';
+
+vCounter = 0;
+vSubset='Todo';
+vSubsetSize = SubsetGetSize(pDimension, vSubset);
+# Loop through all elements in the subset
+vIndex = 1;
+    While(vIndex <= vSubsetSize);
+        
+        # Get element name at current index
+        vElement = SubsetGetElementName(pDimension, vSubset, vIndex);
+        
+        # Increment counter
+        vCounter = vCounter + 1;
+        
+    sType = DType(pDimension, vElement);   
+
+    ############### Get attributes ###############
+    vIndAttr=1;
+    vAttrDim =  '}ElementAttributes_' | pDimension;
+    vAttrSize = DIMSIZ(vAttrDim );
+    vAttrList = '';
+    if (vAttrSize>0); 
+        vAttrList = 'Attribute list ('; 
+        
+        #### loop for each attribute ########
+        while (vIndAttr <= vAttrSize); 
+            vAttrName = DIMNM( vAttrDim, vIndAttr );
+            vAttrType= DTYPE( vAttrDim, vAttrName );
+            #vAttrList = vAttrList | ' Attribute ';
+            if (vAttrType@='AA'); 
+                vAttrVal = ATTRS( pDimension, vElement, vAttrName ); 
+                vAttrName = 'Alias ' | vAttrName;
+            elseif( vAttrType@='AS' );
+                vAttrVal = ATTRS( pDimension, vElement, vAttrName ); 
+            else; 
+                vAttrVal = NumberToString(ATTRN( pDimension, vElement, vAttrName ));
+            endif;
+            # elseif(vAttrType@='AN'); 
+            # vAttrVal = NumberToString(ATTRN( pDimension, vElement, vAttrName ));
+            # endif;
+            # if (vAttrType@='AS'); 
+            #     vAttrVal = ATTRS( pDimension, vElement, vAttrName ); 
+            # endif;
+            # if (vAttrType@='AN'); 
+            #     vAttrVal = NumberToString(ATTRN( pDimension, vElement, vAttrName )); 
+            # endif;
+            if (vAttrVal@<>''); 
+                if (vIndAttr<vAttrSize & vIndAttr<>1); 
+                    vAttrList=vAttrList |',' | ' Attribute '| vAttrName | ' is ' | vAttrVal ; 
+                elseif( vIndAttr=1 );
+                    vAttrList=vAttrList | ' Attribute '| vAttrName | ' is ' | vAttrVal ; 
+                else;
+                    vAttrList=vAttrList  | ' Attribute '| vAttrName | ' is ' | vAttrVal; 
+                endif;    
+            endif;
+            
+            vIndAttr = vIndAttr + 1; 
+        end;
+        #### loop for each attribute ########
+        
+        vAttrList= vAttrList | ')';
+    endif;
+    ############### END Get attributes ###############
+    if (vAttrList@<>''); 
+        AsciiOutput(sFile, sType, '', vElement, '1',vAttrList); 
+        vFinalPromp=vFinalPromp |  sType | ', ' | vElement | '1'| vAttrList;
+    else; 
+        AsciiOutput(sFile, sType, '', vElement, '1'); 
+        vFinalPromp=vFinalPromp |  sType | ', ' | vElement | '1';
+    endif;
+    
+    
+    # If it is consolidated, write all its children with weights
+        If (sType @= 'C');
+            cpt = 1;
+            n = ElCompN(pDimension, vElement);
+            While(cpt <= n);
+                sChild = ElComp(pDimension, vElement, cpt);
+                sWeight = NumberToString(ElWeight(pDimension, vElement, sChild));
+                AsciiOutput(sFile, '', vElement, sChild, sWeight);
+                vFinalPromp=vFinalPromp | ' ,' | vElement | ', '  | sChild  | ', '  |  sWeight;
+                cpt = cpt + 1;
+            End;
+        EndIf;
+################ FIN Add dim to prompt ###############
+        
+        vIndex = vIndex + 1;
+    End;
+End;
+
+
+##### Insert default dimension elements ############
+prompt=CellGetS( 'zai_prompt', vLanguage,vVers,'non specified dim', 'text' );
+
+vSubsetSize = SubsetGetSize('}Dimensions', pCubeName);
+# Loop through all elements in the subset
+vIndex = 1;
+    While(vIndex <= vSubsetSize);
+        vElement = SubsetGetElementName('}Dimensions', pCubeName, vIndex);
+        prompt=prompt | 'Dimension "' | vElement | '" has the default element: ' | CellGetS( '}DimensionAttributes', vElement, '}DimensionAttributes':'DefaultElement' ) |'. ';
+        vIndex = vIndex + 1;
+    End;
+AsciiOutput(sFile, prompt);
+vFinalPromp=vFinalPromp | prompt;
+##### FIN Insert default dimension elements ############
+
+prompt='
+';
+AsciiOutput(sFile, prompt);
+vFinalPromp=vFinalPromp | prompt;
+
+##### Add supported info (https://community.ibm.com/community/user/blogs/george-tonkin/2022/06/11/tm1-planning-analytics-mdx-reference-guide) ############
+prompt= CellGetS( 'zai_prompt',vLanguage,vVers, 'supporting material', 'text' );
+AsciiOutput(sFile, prompt);
+vFinalPromp=vFinalPromp | prompt;
+##### END Add supported info ############
+
+prompt='
+';
+AsciiOutput(sFile, prompt);
+vFinalPromp=vFinalPromp | prompt;
+
+##### Add final question ############
+question_prompt=CellGetS( 'zai_prompt', vLanguage,vVers,'prompt question', 'text' );
+question=CellGetS( 'zai_prompt', vLanguage,vVers,'question', 'text' );
+#prompt=question_prompt | ' ' | pQuery;
+prompt=question_prompt | ' ' | question;
+AsciiOutput(sFile, prompt);
+vFinalPromp=vFinalPromp | prompt;
+CellPutS( vFinalPromp, 'zai_prompt', pLanguage, pVersion, 'final promt', 'text' );
+
+##### END Add final question ############
+#endregion

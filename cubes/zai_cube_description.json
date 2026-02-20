@@ -1,0 +1,20 @@
+{
+	"@type":"Cube",
+	"Name":"zai_cube_description",
+	"Dimensions":
+	[
+		{
+			"@id":"Dimensions('zai_language')"
+		},
+		{
+			"@id":"Dimensions('zai_version')"
+		},
+		{
+			"@id":"Dimensions('zai_cube_list')"
+		},
+		{
+			"@id":"Dimensions('zai_cube_description')"
+		}
+	],
+	"Views@Code.links":[]
+}

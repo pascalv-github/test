@@ -1,0 +1,123 @@
+#region Prolog
+##################################### 1 - Create zai_prompt_cube #####################################
+# ==== Check and create dimensions if they do not exist ====
+
+sDim1 = 'zai_language';
+IF( DimensionExists( sDim1 ) = 0 );
+    DimensionCreate( sDim1 );
+ENDIF;
+
+sDim2 = 'zai_version';
+IF( DimensionExists( sDim2 ) = 0 );
+    DimensionCreate( sDim2 );
+ENDIF;
+
+sDim3 = 'zai_prompt';
+IF( DimensionExists( sDim3 ) = 0 );
+    DimensionCreate( sDim3 );
+ENDIF;
+
+sDim4 = 'zai_text_prompt';
+IF( DimensionExists( sDim4 ) = 0 );
+    DimensionCreate( sDim4 );
+ENDIF;
+
+# ==== Add elements to zai_language ====
+IF( DimensionExists( sDim1 ) = 1 );
+    DimensionElementInsert( sDim1, '', 'es', 'N' );
+    DimensionElementInsert( sDim1, '', 'en', 'N' );
+ENDIF;
+
+# ==== Add elements to zai_version ====
+IF( DimensionExists( sDim2 ) = 1 );
+    DimensionElementInsert( sDim2, '', 'v1', 'N' );
+    DimensionElementInsert( sDim2, '', 'v2', 'N' );
+    DimensionElementInsert( sDim2, '', 'v3', 'N' );
+    DimensionElementInsert( sDim2, '', 'Final', 'N' );
+ENDIF;
+
+# ==== Add elements to zai_prompt ====
+IF( DimensionExists( sDim3 ) = 1 );
+    DimensionElementInsert( sDim3, '', 'prompt ini', 'N' );
+    DimensionElementInsert( sDim3, '', 'question', 'N' );
+    DimensionElementInsert( sDim3, '', 'prompt question', 'N' );
+    DimensionElementInsert( sDim3, '', 'non specified dim', 'N' );
+    DimensionElementInsert( sDim3, '', 'supporting material', 'N' );
+ENDIF;
+
+# ==== Add element to zai_text_prompt (appears to be a simple/text dimension) ====
+IF( DimensionExists( sDim4 ) = 1 );
+    DimensionElementInsert( sDim4, '', 'text', 'S' );
+ENDIF;
+
+# ==== Create the cube if it does not exist ====
+sCube = 'zai_prompt_cube';
+IF( CubeExists( sCube ) = 0 );
+    CubeCreate( sCube, sDim1, sDim2, sDim3, sDim4 );
+ENDIF;
+##################################### FIN - 1 - Create zai_prompt_cube #####################################
+
+##################################### 2 - Create zai_cube_description #####################################
+# ==== Check and create dimensions if they do not exist ====
+
+sDimLang = 'zai_language';
+IF( DimensionExists( sDimLang ) = 0 );
+    DimensionCreate( sDimLang );
+ENDIF;
+
+sDimVer = 'zai_version';
+IF( DimensionExists( sDimVer ) = 0 );
+    DimensionCreate( sDimVer );
+ENDIF;
+
+sDimList = 'zai_cube_list';
+IF( DimensionExists( sDimList ) = 0 );
+    DimensionCreate( sDimList );
+ENDIF;
+
+sDimDesc = 'zai_cube_description';
+IF( DimensionExists( sDimDesc ) = 0 );
+    DimensionCreate( sDimDesc );
+ENDIF;
+
+# ==== Add elements to zai_language ====
+IF( DimensionExists( sDimLang ) = 1 );
+    # Optional: Add a consolidation for level00 if needed (image shows it under Levels)
+    DimensionElementInsert( sDimLang, '', 'level00', 'C' );
+    DimensionElementInsert( sDimLang, '', 'es', 'N' );
+    DimensionElementComponentAdd( sDimLang, 'level00', 'es', 1 );
+    DimensionElementInsert( sDimLang, '', 'en', 'N' );
+    DimensionElementComponentAdd( sDimLang, 'level00', 'en', 1 );
+    # If level00 is not intended as a consolidation, comment the above C lines and use 'N' for all
+ENDIF;
+
+# ==== Add elements to zai_version ====
+IF( DimensionExists( sDimVer ) = 1 );
+    DimensionElementInsert( sDimVer, '', 'v1', 'N' );
+    DimensionElementInsert( sDimVer, '', 'v2', 'N' );
+    DimensionElementInsert( sDimVer, '', 'v3', 'N' );
+    DimensionElementInsert( sDimVer, '', 'Final', 'N' );
+ENDIF;
+
+# ==== Add elements to zai_cube_list ====
+IF( DimensionExists( sDimList ) = 1 );
+    DimensionElementInsert( sDimList, '', 'cube 1', 'N' );
+    DimensionElementInsert( sDimList, '', 'cube 2', 'N' );
+    DimensionElementInsert( sDimList, '', 'cube 3', 'N' );
+    DimensionElementInsert( sDimList, '', 'cube 4', 'N' );
+    DimensionElementInsert( sDimList, '', 'cube 5', 'N' );
+ENDIF;
+
+# ==== Add element to zai_cube_description (string/text measure) ====
+IF( DimensionExists( sDimDesc ) = 1 );
+    DimensionElementInsert( sDimDesc, '', 'Cube description', 'S' );  
+    DimensionElementInsert( sDimDesc, '', 'Cube name', 'S' );  
+ENDIF;
+# ==== Create the control cube if it does not exist ====
+sCube = 'zai_cube_description';
+IF( CubeExists( sCube ) = 0 );
+    CubeCreate( sCube, sDimList, sDimLang, sDimVer, sDimDesc );
+    # Order: cube list first (primary), then language, version, description (string measure) last
+ENDIF;
+##################################### END - 2 - Create zai_cube_description #####################################
+#endregion

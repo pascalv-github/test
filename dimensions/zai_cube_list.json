@@ -1,0 +1,12 @@
+{
+	"@type":"Dimension",
+	"Name":"zai_cube_list",
+	"Hierarchies@Code.links":
+	[
+		"zai_cube_list.hierarchies/zai_cube_list.json"
+	],
+	"DefaultHierarchy":
+	{
+		"@id":"Dimensions('zai_cube_list')/Hierarchies('zai_cube_list')"
+	}
+}

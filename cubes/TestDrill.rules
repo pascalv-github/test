@@ -1,0 +1,1 @@
+[Values:'Values':'Drill']=S: IF( ELLEV( 'Product', !Product )=0  & ELLEV( 'Channel', !Channel )=0, 'http://na4.services.cloud.techzone.ibm.com:43459/bi/?pathRef=.public_folders%2Ftestdrill%2Fdrill%2Breport&action=run&format=HTML&prompt=false&p_pProdPrompt='  | ATTRS( 'Product', !Product, 'Name' ),STET );

@@ -1,0 +1,12 @@
+{
+	"@type":"Dimension",
+	"Name":"zai_config",
+	"Hierarchies@Code.links":
+	[
+		"zai_config.hierarchies/zai_config.json"
+	],
+	"DefaultHierarchy":
+	{
+		"@id":"Dimensions('zai_config')/Hierarchies('zai_config')"
+	}
+}

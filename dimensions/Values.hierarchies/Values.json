@@ -1,0 +1,20 @@
+{
+	"@type":"Hierarchy",
+	"Name":"Values",
+	"Elements":
+	[
+		{
+			"Name":"Sales",
+			"Type":"Numeric"
+		},
+		{
+			"Name":"Drill",
+			"Type":"String"
+		},
+		{
+			"Name":"Comment",
+			"Type":"String"
+		}
+	],
+	"Subsets@Code.links":[]
+}

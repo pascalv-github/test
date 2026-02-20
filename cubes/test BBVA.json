@@ -1,0 +1,18 @@
+{
+	"@type":"Cube",
+	"Name":"test BBVA",
+	"Dimensions":
+	[
+		{
+			"@id":"Dimensions('Products')"
+		},
+		{
+			"@id":"Dimensions('Channel')"
+		},
+		{
+			"@id":"Dimensions('Values')"
+		}
+	],
+	"Rules@Code.link":"test BBVA.rules",
+	"Views@Code.links":[]
+}

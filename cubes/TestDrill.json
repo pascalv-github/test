@@ -1,0 +1,18 @@
+{
+	"@type":"Cube",
+	"Name":"TestDrill",
+	"Dimensions":
+	[
+		{
+			"@id":"Dimensions('Product')"
+		},
+		{
+			"@id":"Dimensions('Channel')"
+		},
+		{
+			"@id":"Dimensions('Values')"
+		}
+	],
+	"Rules@Code.link":"TestDrill.rules",
+	"Views@Code.links":[]
+}

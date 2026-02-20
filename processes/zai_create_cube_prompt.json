@@ -1,0 +1,32 @@
+{
+	"@type":"Process",
+	"Name":"zai_create_cube_prompt",
+	"HasSecurityAccess":false,
+	"Code@Code.link":"zai_create_cube_prompt.ti",
+	"DataSource":
+	{
+		"Type":"None"
+	},
+	"Parameters":
+	[
+		{
+			"Name":"pCubeName",
+			"Prompt":"",
+			"Value":"Datos personales",
+			"Type":"String"
+		},
+		{
+			"Name":"pLanguage",
+			"Prompt":"",
+			"Value":"es",
+			"Type":"String"
+		},
+		{
+			"Name":"pVersion",
+			"Prompt":"",
+			"Value":"Final",
+			"Type":"String"
+		}
+	],
+	"Variables":[]
+}

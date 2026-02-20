@@ -1,0 +1,25 @@
+{
+	"@type":"MDXView",
+	"Name":"Default",
+	"MDX@Code.link":"Default.mdx",
+	"Meta": {
+		"Aliases": {},
+		"ExpandAboves": {
+			"[zai_language].[zai_language]": false,
+			"[zai_texto_prompt].[zai_texto_prompt]": false,
+			"[zai_version].[zai_version]": false,
+			"[zai_prompt].[zai_prompt]": false
+		},
+		"ContextSets": {
+			"[zai_language].[zai_language]": {
+				"Expression": "{[zai_language].[zai_language].MEMBERS}"
+			}
+		}
+	},
+	"ViewExtractSkipRuleValues": false,
+	"ViewExtractSkipConsolidatedValues": true,
+	"ViewExtractSkipZeroes": true,
+	"IsSuppressComputeOnOpen": false,
+	"IsAutocalculate": true,
+	"IsDeferComputeOnLeafDataEntry": false
+}

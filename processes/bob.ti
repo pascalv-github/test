@@ -1,0 +1,114 @@
+#region Prolog
+
+# Dimension 1: City
+sDimName = 'City';
+IF (DimensionExists(sDimName) = 0);
+    DimensionCreate(sDimName);
+    DimensionElementInsert(sDimName, '', 'Montreal', 'N');
+    DimensionElementInsert(sDimName, '', 'All Cities', 'C');
+    DimensionElementComponentAdd(sDimName, 'All Cities', 'Montreal', 1);
+ENDIF;
+
+# Dimension 2: Version
+sDimName = 'Version';
+IF (DimensionExists(sDimName) = 0);
+    DimensionCreate(sDimName);
+    DimensionElementInsert(sDimName, '', 'Actual', 'N');
+    DimensionElementInsert(sDimName, '', 'Budget', 'N');
+    DimensionElementInsert(sDimName, '', 'Forecast', 'N');
+    DimensionElementInsert(sDimName, '', 'Variance', 'N');
+    DimensionElementInsert(sDimName, '', 'All Versions', 'C');
+    DimensionElementComponentAdd(sDimName, 'All Versions', 'Actual', 1);
+    DimensionElementComponentAdd(sDimName, 'All Versions', 'Budget', 1);
+    DimensionElementComponentAdd(sDimName, 'All Versions', 'Forecast', 1);
+ENDIF;
+
+# Dimension 3: Month
+sDimName = 'Month';
+IF (DimensionExists(sDimName) = 0);
+    DimensionCreate(sDimName);
+    # Leaf elements - months
+    DimensionElementInsert(sDimName, '', 'Jan', 'N');
+    DimensionElementInsert(sDimName, '', 'Feb', 'N');
+    DimensionElementInsert(sDimName, '', 'Mar', 'N');
+    DimensionElementInsert(sDimName, '', 'Apr', 'N');
+    DimensionElementInsert(sDimName, '', 'May', 'N');
+    DimensionElementInsert(sDimName, '', 'Jun', 'N');
+    DimensionElementInsert(sDimName, '', 'Jul', 'N');
+    DimensionElementInsert(sDimName, '', 'Aug', 'N');
+    DimensionElementInsert(sDimName, '', 'Sep', 'N');
+    DimensionElementInsert(sDimName, '', 'Oct', 'N');
+    DimensionElementInsert(sDimName, '', 'Nov', 'N');
+    DimensionElementInsert(sDimName, '', 'Dec', 'N');
+    
+    # Consolidated elements
+    DimensionElementInsert(sDimName, '', 'Q1', 'C');
+    DimensionElementComponentAdd(sDimName, 'Q1', 'Jan', 1);
+    DimensionElementComponentAdd(sDimName, 'Q1', 'Feb', 1);
+    DimensionElementComponentAdd(sDimName, 'Q1', 'Mar', 1);
+    
+    DimensionElementInsert(sDimName, '', 'Q2', 'C');
+    DimensionElementComponentAdd(sDimName, 'Q2', 'Apr', 1);
+    DimensionElementComponentAdd(sDimName, 'Q2', 'May', 1);
+    DimensionElementComponentAdd(sDimName, 'Q2', 'Jun', 1);
+    
+    DimensionElementInsert(sDimName, '', 'Q3', 'C');
+    DimensionElementComponentAdd(sDimName, 'Q3', 'Jul', 1);
+    DimensionElementComponentAdd(sDimName, 'Q3', 'Aug', 1);
+    DimensionElementComponentAdd(sDimName, 'Q3', 'Sep', 1);
+    
+    DimensionElementInsert(sDimName, '', 'Q4', 'C');
+    DimensionElementComponentAdd(sDimName, 'Q4', 'Oct', 1);
+    DimensionElementComponentAdd(sDimName, 'Q4', 'Nov', 1);
+    DimensionElementComponentAdd(sDimName, 'Q4', 'Dec', 1);
+    
+    DimensionElementInsert(sDimName, '', 'Total Year', 'C');
+    DimensionElementComponentAdd(sDimName, 'Total Year', 'Q1', 1);
+    DimensionElementComponentAdd(sDimName, 'Total Year', 'Q2', 1);
+    DimensionElementComponentAdd(sDimName, 'Total Year', 'Q3', 1);
+    DimensionElementComponentAdd(sDimName, 'Total Year', 'Q4', 1);
+ENDIF;
+
+# Dimension 4: Cost Type
+sDimName = 'Cost Type';
+IF (DimensionExists(sDimName) = 0);
+    DimensionCreate(sDimName);
+    # Leaf elements
+    DimensionElementInsert(sDimName, '', 'Utilities', 'N');
+    DimensionElementInsert(sDimName, '', 'Repairs', 'N');
+    DimensionElementInsert(sDimName, '', 'Rent', 'N');
+    DimensionElementInsert(sDimName, '', 'Marketing', 'N');
+    DimensionElementInsert(sDimName, '', 'Travel', 'N');
+    DimensionElementInsert(sDimName, '', 'Entertainment', 'N');
+    DimensionElementInsert(sDimName, '', 'Automobiles', 'N');
+    
+    # Consolidated element
+    DimensionElementInsert(sDimName, '', 'Total Cost', 'C');
+    DimensionElementComponentAdd(sDimName, 'Total Cost', 'Utilities', 1);
+    DimensionElementComponentAdd(sDimName, 'Total Cost', 'Repairs', 1);
+    DimensionElementComponentAdd(sDimName, 'Total Cost', 'Rent', 1);
+    DimensionElementComponentAdd(sDimName, 'Total Cost', 'Marketing', 1);
+    DimensionElementComponentAdd(sDimName, 'Total Cost', 'Travel', 1);
+    DimensionElementComponentAdd(sDimName, 'Total Cost', 'Entertainment', 1);
+    DimensionElementComponentAdd(sDimName, 'Total Cost', 'Automobiles', 1);
+ENDIF;
+
+# Dimension 5: P&L Measure
+sDimName = 'P&L Measure';
+IF (DimensionExists(sDimName) = 0);
+    DimensionCreate(sDimName);
+    # Input measures
+    DimensionElementInsert(sDimName, '', 'Units Sold', 'N');
+    DimensionElementInsert(sDimName, '', 'Unit Price', 'N');
+    DimensionElementInsert(sDimName, '', 'Unit Cost', 'N');
+    DimensionElementInsert(sDimName, '', 'Other Cost', 'N');
+    
+    # Calculated measures (will be defined in rules)
+    DimensionElementInsert(sDimName, '', 'Sales', 'N');
+    DimensionElementInsert(sDimName, '', 'Cost of Sales', 'N');
+    DimensionElementInsert(sDimName, '', 'Margin', 'N');
+    DimensionElementInsert(sDimName, '', 'Profit', 'N');
+    DimensionElementInsert(sDimName, '', 'Margin %', 'N');
+    DimensionElementInsert(sDimName, '', 'Profit %', 'N');
+ENDIF;
+#endregion
